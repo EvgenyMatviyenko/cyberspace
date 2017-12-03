@@ -111,6 +111,9 @@ func makeWorld(tilesWidth: Int, tilesHeight: Int) -> BlockWorld {
     let size = Size(width: tilesWidth * 10, depth: tilesHeight * 10, height: 100)
     var world = BlockWorld(repeating: BlockLayer(repeating: BlockRow(repeating: nil, count: size.width), count: size.depth), count: size.height)
 
+    // Floor
+    fill(world: &world, size: Size(width: size.width, depth: size.depth, height: 1), position: Position(x: 0, z: 0, y: 0), block: Block(color: .green, character: "."))
+
     // tiles
     (0..<tilesWidth).forEach { tileX in
         (0..<tilesHeight).forEach { tileY in
@@ -153,7 +156,7 @@ func makeWorld(tilesWidth: Int, tilesHeight: Int) -> BlockWorld {
     // Trees
     world[0].enumerated().forEach { (rowIndex, row) in
         row.enumerated().forEach { (blockIndex, block) in
-            if block == nil && arc4random_uniform(20) == 1 {
+            if block?.character == "." && arc4random_uniform(20) == 1 {
                 fill(world: &world, size: Size(width: 1, depth: 1, height: Int(arc4random_uniform(5)) + 2), position: Position(x: blockIndex, z: rowIndex, y: 1), block: Block(color: arc4random_uniform(2) == 1 ? Color.green : Color.yellow, character: "^"))
             }
         }
