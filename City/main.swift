@@ -1,8 +1,8 @@
 
 import Foundation
 
-let world = makeWorld(tilesWidth: 150, tilesHeight: 150)
-var offsetX = 1500
+let world = makeWorld(tilesWidth: 50, tilesHeight: 50)
+var offsetX = 500
 var offsetY = 0
 while true {
     draw(world: world, offsetX: offsetX, offsetY: offsetY)

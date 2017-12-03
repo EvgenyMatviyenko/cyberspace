@@ -5,6 +5,7 @@ private enum Tile {
     case house(isBig: Bool, floorsCount: Int, color: Color)
     case road(horizontal: Bool)
     case crossroad
+    case pyramid(color: Color, floorHeight: Int)
 
     func build(world: inout BlockWorld, position: Position) {
         switch self {
@@ -33,6 +34,12 @@ private enum Tile {
             Tile.road(horizontal: true).build(world: &world, position: position)
             fill(world: &world, size: Size(width: 10, depth: 5, height: 1), position: Position.init(x: position.x, z: position.z + 3, y: position.y), block: Block(color: .white, character: " "))
             fill(world: &world, size: Size(width: 5, depth: 10, height: 1), position: Position(x: position.x + 3, z: position.z, y: position.y), block: Block(color: .white, character: " "))
+        case let .pyramid(color, floorHeight):
+            (0..<5).forEach { i in
+                let size = Size(width: 10 - i * 2, depth: 10 - i * 2, height: floorHeight)
+                let position = Position(x: position.x + i, z: position.z + i, y: position.y + i * floorHeight)
+                buildRectangle(world: &world, size: size, position: position, color: color)
+            }
         }
     }
 }
@@ -101,7 +108,7 @@ private func buildHouse(world: inout BlockWorld, isBig: Bool, position: Position
 }
 
 func makeWorld(tilesWidth: Int, tilesHeight: Int) -> BlockWorld {
-    let size = Size(width: tilesWidth * 10, depth: tilesHeight * 10, height: 60)
+    let size = Size(width: tilesWidth * 10, depth: tilesHeight * 10, height: 100)
     var world = BlockWorld(repeating: BlockLayer(repeating: BlockRow(repeating: nil, count: size.width), count: size.depth), count: size.height)
 
     // tiles
@@ -113,17 +120,31 @@ func makeWorld(tilesWidth: Int, tilesHeight: Int) -> BlockWorld {
             let isHorizontalRoad = Float(tileY).remainder(dividingBy: 4) == 0
             let isCrossroad = isVerticalRoad && isHorizontalRoad
 
+            func random(max: Int) -> Int {
+                return Int(arc4random_uniform(UInt32(max))) + 1
+            }
+
+            func randomColor() -> Color {
+                return Color(rawValue: Int(arc4random_uniform(7)) + 30) ?? .blue
+            }
+
             func randomHouse() -> Tile {
                 let randomIsBig = arc4random_uniform(7) == 1
-                let randomColor: Color = Color(rawValue: Int(arc4random_uniform(7)) + 30) ?? .blue
-                let randomFloorsCount = Int(arc4random_uniform(8)) + 1
-                return .house(isBig: randomIsBig, floorsCount: randomFloorsCount, color: randomColor)
+                return .house(isBig: randomIsBig, floorsCount: random(max: 4), color: randomColor())
+            }
+
+            func randomPyramid() -> Tile {
+                return .pyramid(color: randomColor(), floorHeight: random(max: 3))
+            }
+
+            func randomStructure() -> Tile {
+                return arc4random_uniform(5) == 1 ? randomPyramid() : randomHouse()
             }
 
             let tile: Tile = isCrossroad ? .crossroad :
                 isVerticalRoad ? .road(horizontal: false) :
                 isHorizontalRoad ? .road(horizontal: true) :
-                randomHouse()
+                randomStructure()
 
             tile.build(world: &world, position: position)
         }
