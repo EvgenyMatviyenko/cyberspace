@@ -25,30 +25,20 @@ private func draw(grid: Grid) -> String {
     return formattedRows.joined(separator: "\n")
 }
 
-func draw(world: BlockWorld, width: Int = 60, height: Int = 40, offsetX: Int = 0, offsetY: Int = 0) {
+func draw(world: World, width: Int = 60, height: Int = 40, offsetX: Int = 0, offsetY: Int = 0) {
     var grid = Grid(repeating: [ScreenCell](repeating: .none, count: width), count: height)
 
     // Place world
-    world.enumerated().forEach { (layerIndex, layer) in
-        let rowsOffset = max(offsetY, 0)
-        let rows: ArraySlice<BlockRow> = layer
-            .dropFirst(rowsOffset)
-            .prefix(height + 40)
-
-        rows.enumerated().forEach { (rowIndex, row) in
-            let reverseRowIndex = layer.count - rowIndex - rowsOffset
-            let i = rowIndex - layerIndex - offsetY + rowsOffset
-
-            let blocksOffset = max(offsetX - reverseRowIndex, 0)
-            let blocks: ArraySlice<Block?> = row
-                .dropFirst(blocksOffset)
-                .prefix(width)
-
-            blocks.enumerated().forEach { (columnIndex, block) in
-                let j = columnIndex + reverseRowIndex - offsetX + blocksOffset
-
-                if let block = block, i < height && i > 0, j < width && j > 0 {
-                    grid[i][j] = .some(color: block.color, character: block.character)
+    (0..<world.height).forEach { y in
+        let zWorldOffset = offsetY
+        (zWorldOffset..<zWorldOffset + height + world.height).forEach { z in
+            let xWorldOffset = offsetX + z
+            (xWorldOffset..<xWorldOffset + width).forEach { x in
+                let i = z - y - offsetY
+                let j = x - z - offsetX
+                let position = Position(x: x, z: z, y: y)
+                if let block = world.block(at: position), (0..<height).contains(i), (0..<width).contains(j) {
+                    grid[i][j] = ScreenCell.some(color: block.color, character: block.character)
                 }
             }
         }

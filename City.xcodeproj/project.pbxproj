@@ -10,6 +10,7 @@
 		6A16D04F1FD48CA60075F143 /* Drawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A16D04E1FD48CA60075F143 /* Drawing.swift */; };
 		6A16D0531FD48D270075F143 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A16D0521FD48D270075F143 /* Types.swift */; };
 		6A16D0551FD48DAF0075F143 /* Generation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A16D0541FD48DAF0075F143 /* Generation.swift */; };
+		6A2E82741FD5418B0019429B /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2E82731FD5418B0019429B /* World.swift */; };
 		6A6CC59F1FD35A5F00FF782B /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6CC59E1FD35A5F00FF782B /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +30,7 @@
 		6A16D04E1FD48CA60075F143 /* Drawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drawing.swift; sourceTree = "<group>"; };
 		6A16D0521FD48D270075F143 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		6A16D0541FD48DAF0075F143 /* Generation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generation.swift; sourceTree = "<group>"; };
+		6A2E82731FD5418B0019429B /* World.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
 		6A6CC59B1FD35A5F00FF782B /* City */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = City; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A6CC59E1FD35A5F00FF782B /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -67,6 +69,7 @@
 				6A16D0541FD48DAF0075F143 /* Generation.swift */,
 				6A16D04E1FD48CA60075F143 /* Drawing.swift */,
 				6A16D0521FD48D270075F143 /* Types.swift */,
+				6A2E82731FD5418B0019429B /* World.swift */,
 			);
 			path = City;
 			sourceTree = "<group>";
@@ -133,6 +136,7 @@
 				6A6CC59F1FD35A5F00FF782B /* main.swift in Sources */,
 				6A16D0531FD48D270075F143 /* Types.swift in Sources */,
 				6A16D0551FD48DAF0075F143 /* Generation.swift in Sources */,
+				6A2E82741FD5418B0019429B /* World.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
