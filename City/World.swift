@@ -21,6 +21,11 @@ struct InfiniteWorld: World {
     }
 
     func block(at position: Position) -> Block? {
-        return blockWorld[position.y % height][position.z % depth][position.x % width]
+        return blockWorld[mod(position.y, height)][mod(position.z, depth)][mod(position.x, width)]
+    }
+
+    private func mod(_ a: Int, _ n: Int) -> Int {
+        let r = a % n
+        return r >= 0 ? r : r + n
     }
 }
