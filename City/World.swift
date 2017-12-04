@@ -6,7 +6,7 @@ protocol World {
     func block(at position: Position) -> Block?
 }
 
-struct _World: World {
+struct InfiniteWorld: World {
     let height: Int
     private let width: Int
     private let depth: Int
@@ -21,10 +21,6 @@ struct _World: World {
     }
 
     func block(at position: Position) -> Block? {
-        guard position.x < width && position.z < depth && position.y < height && position.x >= 0 && position.z >= 0 && position.y >= 0 else {
-            return nil
-        }
-
-        return blockWorld[position.y][position.z][position.x]
+        return blockWorld[position.y % height][position.z % depth][position.x % width]
     }
 }
